@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     account:'',
-    oldPassword:''
+    oldPassword:'',
+    user_id:''
   },
   mutations: {
         changeAccount(state,newAccount)
@@ -16,6 +17,10 @@ export default new Vuex.Store({
         changePassword(state,oldPassword)
         {
             state.oldPassword = oldPassword
+        },
+        makeUserId(state,infoId)
+        {
+          state.user_id = infoId
         }
 
   },

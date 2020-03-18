@@ -8,7 +8,14 @@ const routes = [
   {
     path: '/home',
     name: 'Home',
-    component: Home
+    component: Home,
+    children:[
+      {
+        path:'/repositoryAdd',            //二级的默认路由（此path指向上一级，即path:'/about'）
+        name:'RepositoryAdd',        
+        component: () => import(/* webpackChunkName: "about" */ '../components/repository/repositoryAdd.vue')
+      }
+    ]
   },
   {
     path: '/about',

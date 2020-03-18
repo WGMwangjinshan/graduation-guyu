@@ -72,12 +72,13 @@ export default {
         console.log(jsonObj);
         this.status = eval("(" + jsonObj + ")").data.base.body;
         if (this.status == "success") {
-          console.log("猜猜我是谁" + this.status);
+          console.log("我是新的数据" + eval("(" + jsonObj + ")").data.user_id);
           // this.$router.push('/home')
           // this.$store.state.account = this.account
           this.$store.commit('changeAccount',this.account)
           this.$store.commit('changePassword',this.password)
-          this.$router.push({path:'/home',query:{id:this.$store.state.account}})
+          this.$store.commit('makeUserId',eval("(" + jsonObj + ")").data.user_id)
+          this.$router.push({path:'/home',query:{id:this.$store.state.user_id}})
         }
         else{
           // alert(this.$store.state.account)

@@ -49,9 +49,12 @@ export default {
   },
   created() {
     console.log("现在的密码是" + this.$store.state.oldPassword);
-
+    console.log('nowId-----'+this.$route.query.id);
+    
     let params1 = {
-      account: this.$route.query.id
+      user_id: this.$route.query.id
+      // user_id: "1723026372244176896"
+
     };
     let params = JSON.stringify(params1);
     this.$http

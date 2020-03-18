@@ -1,12 +1,11 @@
 <template>
   <div>
-    <router-link :to="{name:'Personal',query:{id:this.$store.state.account}}" @click="Personal">
+    <router-link :to="{name:'Personal',query:{id:this.$store.state.user_id}}" @click="Personal">
       <el-avatar style="float:right" icon="el-icon-user-solid"></el-avatar>
     </router-link>
     <el-tabs tab-position="left" style="height: 200px;">
-      <el-tab-pane label="文件管理">
-
-        <stage-index></stage-index>
+      <el-tab-pane label="仓库管理">
+        <repository-index style="height:1800px"></repository-index>
       </el-tab-pane>
       <el-tab-pane label="配置管理">配置管理</el-tab-pane>
       <el-tab-pane label="角色管理">角色管理</el-tab-pane>
@@ -16,10 +15,10 @@
 </template>
 
 <script>
-import stageIndex from '../components/stage/stageIndex'
+import repositoryIndex from '../components/repository/repositoryIndex'
 export default {
   components:{
-    stageIndex
+    repositoryIndex
   },
   data() {
     return {
@@ -28,9 +27,7 @@ export default {
     };
   },
   created() {
-    // alert('我是这个界面的唯一标示'+this.$route.query.id)
-    console.log("我是这个界面的唯一标示" + this.$route.query.id);
-    console.log("我是vuex内的account" + this.$store.state.account);
+    console.log("我是vuex内的account" + this.$store.state.user_id);
   },
   methods: {
     handleSelect(key, keyPath) {
