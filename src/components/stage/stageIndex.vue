@@ -16,6 +16,11 @@ import stageList from "./stageList";
 import stageAdd from "./stageAdd";
 
 export default {
+  created()
+  {
+    console.log('我是文件列表的vue文件');
+    
+  },
   components: {
     stageList,
     stageAdd

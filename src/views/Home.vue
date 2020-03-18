@@ -3,7 +3,7 @@
     <router-link :to="{name:'Personal',query:{id:this.$store.state.user_id}}" @click="Personal">
       <el-avatar style="float:right" icon="el-icon-user-solid"></el-avatar>
     </router-link>
-    <el-tabs tab-position="left" style="height: 200px;">
+    <el-tabs tab-position="left" style="height: 100%;">
       <el-tab-pane label="仓库管理">
         <repository-index style="height:1800px"></repository-index>
       </el-tab-pane>
@@ -11,9 +11,9 @@
       <el-tab-pane label="角色管理">角色管理</el-tab-pane>
       <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
     </el-tabs>
+      
   </div>
 </template>
-
 <script>
 import repositoryIndex from '../components/repository/repositoryIndex'
 export default {

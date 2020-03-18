@@ -78,7 +78,10 @@ export default {
         else
         {
           alert('现在这个账号有人用了')
-          this.form = ""
+          this.form.account = "",
+          this.form.user_name = "",
+          this.form.password = ""
+
         }
       });
       

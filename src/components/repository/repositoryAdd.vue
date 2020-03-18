@@ -23,7 +23,7 @@ export default {
     return {
       form: {
         name: "",
-        authority: ""
+        authority: "0"
       }
     };
   },

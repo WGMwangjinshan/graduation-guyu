@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import stageIndex from '../components/stage/stageIndex.vue'
 
 Vue.use(VueRouter)
 
@@ -9,13 +10,13 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: Home,
-    children:[
-      {
-        path:'/repositoryAdd',            //二级的默认路由（此path指向上一级，即path:'/about'）
-        name:'RepositoryAdd',        
-        component: () => import(/* webpackChunkName: "about" */ '../components/repository/repositoryAdd.vue')
-      }
-    ]
+    // children:[
+    //   {
+    //     path:'/stageIndex',            //二级的默认路由（此path指向上一级，即path:'/about'）
+    //     name:'StageIndex',        
+    //     component: stageIndex
+    //   }
+    // ]
   },
   {
     path: '/about',
@@ -56,6 +57,14 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Personal.vue')
+  },
+  {
+    path: '/stageIndex',
+    name: 'StageIndex',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component:stageIndex
   }
 ]
 
