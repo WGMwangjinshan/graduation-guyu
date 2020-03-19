@@ -27,6 +27,7 @@ export default {
     };
   },
   created() {
+    this.$store.state.user_id = this.$route.query.id
     console.log("我是vuex内的account" + this.$store.state.user_id);
   },
   methods: {
@@ -34,7 +35,7 @@ export default {
       console.log(key, keyPath);
     },
     Personal() {
-      alert("lalallalalalala");
+      // alert("lalallalalalala");
       console.log("alalalla");
     }
   }

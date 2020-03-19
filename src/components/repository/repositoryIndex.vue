@@ -3,10 +3,10 @@
     <!-- <el-button style="float:left" @click="addRepository" >添加库</el-button> -->
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane label="添加库" name="first">
-        <repository-add></repository-add>
+        <repository-add v-bind:activeName="activeName" v-on:activeNameChanged="zidingyi($event)"></repository-add>
       </el-tab-pane>
       <el-tab-pane label="库列表" name="second">
-        <repository-list></repository-list>
+        <repository-list :key="refreshTable" v-bind:refreshTable="refreshTable" v-on:refreshTableList="zidingyi2($event)"></repository-list>
       </el-tab-pane>
       <!-- <el-tab-pane label="添加文件" name="second">
       <stage-add></stage-add>
@@ -30,15 +30,25 @@ export default {
     repositoryAdd
     // stageAdd
   },
-  name: "stageIndex",
+
 
   data() {
     return {
       activeName: "second",
-      addNum: "0"
+      addNum: "0",
+      refreshTable:1
     };
   },
   methods: {
+    zidingyi(msg)
+    {
+      this.activeName = msg
+      this.refreshTable = this.refreshTable + 1;
+    },
+    zidingyi2(msg)
+    {
+      this.refreshTable = msg
+    },
     handleClick(tab, event) {
       console.log(tab, event);
     },
