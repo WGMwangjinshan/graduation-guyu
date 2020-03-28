@@ -3,8 +3,9 @@
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="头像">
         <el-upload
+          name="file"
           class="avatar-uploader"
-          action="http://49.235.180.218:19999/getAvatar"
+          action="http://49.235.180.218:19999/uploadAvatar"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
@@ -36,6 +37,7 @@ export default {
   data() {
     return {
       form: {
+        image_id:'',
         account: "",
         user_name: "",
         password: "",
@@ -47,6 +49,13 @@ export default {
   methods: {
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
+      console.log('这个是头像传回来的值'+res);
+      let jsonObj = JSON.stringify(res);
+      console.log('这个是头像传回来的id'+eval("(" + jsonObj + ")").image_id);
+      this.form.image_id = eval("(" + jsonObj + ")").image_id
+      
+
+      
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
@@ -83,7 +92,8 @@ export default {
                 account: this.form.account,
                 password: this.form.password
               },
-              user_name: this.form.user_name
+              user_name: this.form.user_name,
+              image_id:this.form.image_id
             };
             let params = JSON.stringify(params1);
             console.log(params);
@@ -131,9 +141,6 @@ export default {
           }
         });
       //
-    },
-    AddAvatar() {
-      console.log("AddAvator");
     }
   }
 };

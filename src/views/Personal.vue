@@ -2,8 +2,7 @@
   <el-card style="width:80%;margin:0 auto">
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="头像">
-        <el-avatar icon="el-icon-user-solid" @click="AddAvatar">
-          <el-button>llll</el-button>
+        <el-avatar icon="el-icon-user-solid" @click="AddAvatar" :src='url'>
         </el-avatar>
       </el-form-item>
       <el-form-item label="用户名">
@@ -44,13 +43,25 @@ export default {
       buttonTap: "0",
       canChange: "1",
       status: "",
-      status1: ""
+      status1: "",
+      url:''
     };
   },
   created() {
     console.log("现在的密码是" + this.$store.state.oldPassword);
     console.log('nowId-----'+this.$route.query.id);
-    
+        let params3 = {
+      image_id:window.sessionStorage.getItem("image_id")
+      };
+      let params4 = JSON.stringify(params3);
+    this.$http
+      .post("http://49.235.180.218:19999/getAvatar", params4)
+      .then(res => {
+        let jsonObj = JSON.stringify(res);
+        // this.status = eval("(" + jsonObj + ")").data.base.body;
+          console.log('图片信息是这个'+eval("(" + jsonObj + ")"));
+          this.url = 'http://49.235.180.218:50002/img/'+window.sessionStorage.getItem("image_id")+'.png'
+          });
     let params1 = {
       user_id: this.$route.query.id
       // user_id: "1723026372244176896"
@@ -84,7 +95,7 @@ export default {
       };
       let params = JSON.stringify(params1);
       console.log(params);
-      if (this.form.oldPassword == this.$store.state.oldPassword) {
+      if (this.form.oldPassword == window.sessionStorage.getItem('password')) {
         console.log("this is a test");
 
         this.$http

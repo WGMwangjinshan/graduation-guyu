@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-link :to="{name:'Personal',query:{id:this.$store.state.user_id}}" @click="Personal">
-      <el-avatar style="float:right" icon="el-icon-user-solid"></el-avatar>
+      <el-avatar style="float:right" icon="el-icon-user-solid" :src="url" fit="scale-down"></el-avatar>
     </router-link>
     <el-tabs tab-position="left" style="height: 100%;">
       <el-tab-pane label="仓库管理">
@@ -11,24 +11,40 @@
       <el-tab-pane label="角色管理">角色管理</el-tab-pane>
       <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
     </el-tabs>
-      
   </div>
 </template>
 <script>
-import repositoryIndex from '../components/repository/repositoryIndex'
+import repositoryIndex from "../components/repository/repositoryIndex";
 export default {
-  components:{
+  components: {
     repositoryIndex
   },
   data() {
     return {
       activeIndex: "1",
-      activeIndex2: "1"
+      activeIndex2: "1",
+      url: ""
     };
   },
   created() {
-    this.$store.state.user_id = this.$route.query.id
+    this.$store.state.user_id = this.$route.query.id;
     console.log("我是vuex内的account" + this.$store.state.user_id);
+    console.log(
+      "我是vuex内的imageid" + window.sessionStorage.getItem("image_id")
+    );
+    let params1 = {
+      image_id:window.sessionStorage.getItem("image_id")
+      };
+      let params = JSON.stringify(params1);
+    this.$http
+      .post("http://49.235.180.218:19999/getAvatar", params)
+      .then(res => {
+        let jsonObj = JSON.stringify(res);
+        // this.status = eval("(" + jsonObj + ")").data.base.body;
+          console.log('图片信息是这个'+eval("(" + jsonObj + ")"));
+          this.url = 'http://49.235.180.218:50002/img/'+window.sessionStorage.getItem("image_id")+'.png'
+          });
+         
   },
   methods: {
     handleSelect(key, keyPath) {
@@ -42,8 +58,8 @@ export default {
 };
 </script>
 <style scoped>
-  #nav{
-    margin: 0;
-    padding: 0;
-  }
+#nav {
+  margin: 0;
+  padding: 0;
+}
 </style>

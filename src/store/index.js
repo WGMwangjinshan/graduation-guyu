@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     account:'',
     oldPassword:'',
-    user_id:''
+    user_id:'',
+    image_id:''
   },
   mutations: {
         changeAccount(state,newAccount)
@@ -21,6 +22,10 @@ export default new Vuex.Store({
         makeUserId(state,infoId)
         {
           state.user_id = infoId
+        },
+        makeImageId(state,image_id)
+        {
+          state.image_id = image_id
         }
 
   },

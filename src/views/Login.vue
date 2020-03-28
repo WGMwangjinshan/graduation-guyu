@@ -72,12 +72,19 @@ export default {
         console.log(jsonObj);
         this.status = eval("(" + jsonObj + ")").data.base.body;
         if (this.status == "success") {
-          console.log("我是新的数据" + eval("(" + jsonObj + ")").data.user_id);
+          console.log("我是新的数据" + eval("(" + jsonObj + ")").data);
           // this.$router.push('/home')
           // this.$store.state.account = this.account
+          let storage = window.sessionStorage;
           this.$store.commit('changeAccount',this.account)
+          storage.setItem('account',this.account)
           this.$store.commit('changePassword',this.password)
+          storage.setItem('password',this.password)
           this.$store.commit('makeUserId',eval("(" + jsonObj + ")").data.user_id)
+          storage.setItem('user_id',eval("(" + jsonObj + ")").data.user_id)
+          this.$store.commit('makeImageId',eval("(" + jsonObj + ")").data.image_id)
+          storage.setItem('image_id',eval("(" + jsonObj + ")").data.image_id)
+          // alert(this.$store.state.image_id)
           this.$router.push({path:'/home',query:{id:this.$store.state.user_id}})
         }
         else{
