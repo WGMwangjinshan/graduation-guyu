@@ -8,9 +8,19 @@ export default new Vuex.Store({
     account:'',
     oldPassword:'',
     user_id:'',
-    image_id:''
+    image_id:'',
+    stageIndex_activeName:'first',
+    stageKey:0
   },
   mutations: {
+    stageKeyAdd(state)
+    {
+      state.stageKey++
+    },
+    changeStageIndex_activeName(state,activeName)
+    {
+        state.stageIndex_activeName = activeName
+    },
         changeAccount(state,newAccount)
         {
             state.account = newAccount

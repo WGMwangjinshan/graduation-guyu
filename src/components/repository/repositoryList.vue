@@ -8,7 +8,7 @@
       <el-table-column prop="update_time" label="上次编辑时间" width="200"></el-table-column>
       <el-table-column fixed="right" label="操作" width="300">
         <template slot-scope="scope">
-          <el-button type="text" size="mini" style="margin-right:10px" @click="intoRepository">进入库</el-button>
+          <el-button type="text" size="mini" style="margin-right:10px" @click.native.prevent="intoRepository(scope.$index, tableData)">进入库</el-button>
           <!-- <el-button type="text" size="small" @click="changeRepository">编辑库</el-button>-->
           <el-popover placement="right" width="400" trigger="click">
             <el-form ref="form" :model="formData" label-width="80px" v-if="formShow = 'true'">
@@ -103,11 +103,12 @@ export default {
           this.formData.authority = String(rows[index].authority)
           
     },
-    intoRepository() {
+    intoRepository(index,rows) {
+          console.log(rows[index].id);
       this.$router.push({
-        path: "/stageIndex"
+        path: "/stageIndex",
         // name:{StageIndex}
-        // query: { id: this.tableData[0].id }
+        query: { id: rows[index].id }
       });
     },
     updateRepository() {
@@ -139,7 +140,7 @@ export default {
       console.log(this.$store.state.user_id);
       let params1 = {
         repository_id:rows[index].id,
-        user_id: this.$store.state.user_id
+        user_id: window.sessionStorage.getItem('user_id')
       };
       let params = JSON.stringify(params1);
 
