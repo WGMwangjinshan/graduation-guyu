@@ -5,6 +5,7 @@
   :on-preview="handlePreview"
   :on-remove="handleRemove"
   :file-list="fileList"
+  :data="{user_id:user_id,repository_id:repository_id}"
   :auto-upload="false">
   <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
   <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
@@ -16,7 +17,9 @@
   export default {
     data() {
       return {
-        fileList: []
+        fileList: [],
+        user_id:window.sessionStorage.getItem('user_id'),
+        repository_id:this.$route.query.id
       };
     },
     methods: {
