@@ -7,17 +7,19 @@
       <el-tab-pane label="仓库管理">
         <repository-index style="height:1800px"></repository-index>
       </el-tab-pane>
-      <el-tab-pane label="配置管理">配置管理</el-tab-pane>
-      <el-tab-pane label="角色管理">角色管理</el-tab-pane>
-      <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
+      <el-tab-pane label="配置管理">
+        <automatics-index style="height:1800px"></automatics-index>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 <script>
 import repositoryIndex from "../components/repository/repositoryIndex";
+import automaticsIndex from "../components/automatics/automaticsIndex"
 export default {
   components: {
-    repositoryIndex
+    repositoryIndex,
+    automaticsIndex
   },
   data() {
     return {

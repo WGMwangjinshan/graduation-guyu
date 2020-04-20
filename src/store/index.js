@@ -10,12 +10,19 @@ export default new Vuex.Store({
     user_id:'',
     image_id:'',
     stageIndex_activeName:'first',
-    stageKey:0
+    stageKey:0,
+    flowKey:0,
+    options1:[],
+    options2:[]
   },
   mutations: {
     stageKeyAdd(state)
     {
       state.stageKey++
+    },
+    flowKeyAdd(state)
+    {
+      state.flowKey++
     },
     changeStageIndex_activeName(state,activeName)
     {
@@ -36,8 +43,15 @@ export default new Vuex.Store({
         makeImageId(state,image_id)
         {
           state.image_id = image_id
-        }
-
+        },
+        addOptions1(state,options1)
+        {
+          state.options1 = options1
+        },
+        addOptions2(state,options2)
+        {
+          state.options2 = options2
+        },
   },
   actions: {
   },
