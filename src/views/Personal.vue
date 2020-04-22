@@ -6,7 +6,7 @@
         </el-avatar>
       </el-form-item>
       <el-form-item label="用户名">
-        <el-input v-model="form.user_name" :disabled="canChange == 1"></el-input>
+        <el-input v-model="form.user_name" :disabled="1"></el-input>
       </el-form-item>
       <el-form-item label="账号">
         <el-input v-model="form.account" :disabled="canChange == 1"></el-input>
@@ -16,6 +16,12 @@
       </el-form-item>
       <el-form-item label="新密码" v-if="canChange == 0">
         <el-input v-model="form.newPassword"></el-input>
+      </el-form-item>
+      <el-form-item label="邮箱地址" v-if="canChange == 0">
+        <el-input v-model="form.email_addr"></el-input>
+      </el-form-item>
+      <el-form-item label="授权码" v-if="canChange == 0">
+        <el-input v-model="form.email_pass"></el-input>
       </el-form-item>
       <el-form-item v-if="buttonTap == 1">
         <el-button type="primary" @click="onSubmit">立即修改</el-button>
@@ -38,7 +44,9 @@ export default {
         user_name: "",
         oldPassword: "",
         newPassword: "",
-        create_time: ""
+        create_time: "",
+        email_addr: "",
+        email_pass: "",
       },
       buttonTap: "0",
       canChange: "1",
@@ -91,7 +99,9 @@ export default {
       let params1 = {
         account: this.form.account,
         user_name: this.form.user_name,
-        password: this.form.newPassword
+        password: this.form.newPassword,
+        email_addr: this.form.email_addr,
+        email_pass: this.form.email_pass
       };
       let params = JSON.stringify(params1);
       console.log(params);
@@ -99,7 +109,7 @@ export default {
         console.log("this is a test");
 
         this.$http
-          .post("http://49.235.180.218:19999/updateUserMessage", params)
+          .post("http://127.0.0.1:19999/updateUserMessage", params)
           .then(res => {
             console.log("res=>", res);
             let jsonObj = JSON.stringify(res);

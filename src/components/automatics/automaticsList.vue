@@ -350,7 +350,7 @@ export default {
             this.triggerValue = (oldData[0].action_position - 1).toString();
             //  alert(this.triggerOptions)
              console.log('asdasdasdasdasdadasd=========='+this.triggerOptions);
-  
+            
             this.options1 = this.$store.state.options1
             this.actionUrl = oldData[1].action_icon;
             this.actionValue = (oldData[1].action_position - 1).toString();
