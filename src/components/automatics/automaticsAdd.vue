@@ -10,19 +10,14 @@
       <el-card v-for="(item, index) in options1">
         <div v-if="item.key == 'Single'">
           <p style="display:inline-block;width:20%">{{ item.title }}</p>
-          <el-select
-            v-model="value11[index]"
-            placeholder="请选择"
-            style="width:80%"
-            @change="value2Change"
-          >
-            <el-option v-for="i in item.options" :key="i.id" :label="i.value" :value="i.id"></el-option>
+          <el-select v-model="value11[index]" placeholder="请选择" style="width:80%">
+            <el-option v-for="i in item.options" :key="i.id" :label="i.value" :value="i.value"></el-option>
           </el-select>
         </div>
         <div v-else-if="item.key == 'Checkbox'">
           <p style="display:inline-block;width:20%">{{ item.title }}</p>
           <el-select v-model="value12[index]" multiple placeholder="请选择" style="width:80%">
-            <el-option v-for="i in item.options" :key="i.id" :label="i.value" :value="i.id"></el-option>
+            <el-option v-for="i in item.options" :key="i.id" :label="i.value" :value="i.value"></el-option>
           </el-select>
         </div>
         <div v-else-if="item.key == 'Text'">
@@ -38,6 +33,7 @@
           <el-date-picker
             v-model="value14[index]"
             type="datetime"
+            value-format="yyyy-MM-dd HH:mm:ss"
             style="display:inline-block;width:80%"
             placeholder="选择日期时间"
           ></el-date-picker>
@@ -58,12 +54,10 @@
         <el-button type="primary" @click="Save1">确 定</el-button>
       </span>
 
-    <!-- action的弹出框 -->
-    <!-- action的弹出框 -->
-    <!-- action的弹出框 -->
-    <!-- action的弹出框 -->
-
-
+      <!-- action的弹出框 -->
+      <!-- action的弹出框 -->
+      <!-- action的弹出框 -->
+      <!-- action的弹出框 -->
     </el-dialog>
     <el-dialog title="提示" :visible.sync="dialogVisible1" width="30%" :before-close="handleClose">
       <el-card v-for="(item, index) in options2">
@@ -75,13 +69,13 @@
             style="width:80%"
             @change="value2Change"
           >
-            <el-option v-for="i in item.options" :key="i.id" :label="i.value" :value="i.id"></el-option>
+            <el-option v-for="i in item.options" :key="i.id" :label="i.value" :value="i.value"></el-option>
           </el-select>
         </div>
         <div v-else-if="item.key == 'Checkbox'">
           <p style="display:inline-block;width:20%">{{ item.title }}</p>
           <el-select v-model="value22[index]" multiple placeholder="请选择" style="width:80%">
-            <el-option v-for="i in item.options" :key="i.id" :label="i.value" :value="i.id"></el-option>
+            <el-option v-for="i in item.options" :key="i.id" :label="i.value" :value="i.value"></el-option>
           </el-select>
         </div>
         <div v-else-if="item.key == 'Text'">
@@ -97,6 +91,7 @@
           <el-date-picker
             v-model="value24[index]"
             type="datetime"
+            value-format="yyyy-MM-dd HH:mm:ss"
             style="display:inline-block;width:80%"
             placeholder="选择日期时间"
           ></el-date-picker>
@@ -114,7 +109,7 @@
       </el-card>
       <span slot="footer" class="dialog-footer">
         <!-- <el-button @click="dialogVisible = false">取 消</el-button> -->
-        <el-button type="primary" @click="Save1">确 定</el-button>
+        <el-button type="primary" @click="Save2">确 定</el-button>
       </span>
     </el-dialog>
     <el-card class="box-card">
@@ -179,16 +174,16 @@ export default {
       actionOptions: [],
       actionValue: "",
       actionUrl: "",
-      value11: [],
-      value12: [],
-      value13: [],
-      value14: [],
-      value15: [],
-      value21: [],
-      value22: [],
-      value23: [],
-      value24: [],
-      value25: [],
+      value11: [] /* tirigger单选*/,
+      value12: [] /* tirigger多选*/,
+      value13: [] /* tirigger文本*/,
+      value14: [] /* tirigger时间选择器*/,
+      value15: [] /* tirigger多行文本*/,
+      value21: [] /* action单选*/,
+      value22: [] /* action多选*/,
+      value23: [] /* action文本*/,
+      value24: [] /* action时间选择器*/,
+      value25: [] /* action多行文本*/,
       options1: [],
       options2: [],
       radio: "A",
@@ -205,7 +200,9 @@ export default {
       key2: "Single",
       position1: "0",
       content1: "",
-      content2: ""
+      content2: "",
+      checkbox1: "",
+      checkbox2: ""
     };
   },
   created() {
@@ -249,7 +246,11 @@ export default {
   },
   methods: {
     triggerChange() {
-      alert(this.triggerOptions[this.triggerValue].action_name);
+      this.value11 = [];
+      this.value12 = [];
+      this.value13 = [];
+      this.value14 = [];
+      this.value15 = [];
       this.triggerUrl = this.triggerOptions[this.triggerValue].ActionIcon;
       // alert(this.triggerOptions[this.triggerValue].ActionId);
       this.dialogVisible = true;
@@ -272,34 +273,41 @@ export default {
             this.options1 = eval(
               "(" + jsonObj + ")"
             ).data.behavior_defination_list;
-            for (let i = 0; i < this.options1.length; i++) {
-              if (this.options1[i].key == "Single") {
-                this.value11.push(this.options1[i].value);
-              } else if (this.options1[i].key == "Checkbox") {
-                this.value12.push(this.options1[i].value);
-              } else if (this.options1[i].key == "Text") {
-                this.value13.push(this.options1[i].value);
-              } else if (this.options1[i].key == "DateTime") {
-                this.value14.push(this.options1[i].value);
-              } else if (this.options1[i].key == "MutiText") {
-                this.value15.push(this.options1[i].value);
-              }
-            }
-
-            console.log(
-              "我是action——ID的值长度==" +
-                this.options1.length +
-                "我是action——ID1的值==" +
-                this.options1[0] +
-                "我是action——ID的值1的key" +
-                this.options1[0].key
-            );
+            // console.log(
+            //   "我是action——ID的值长度==" +
+            //     this.options1.length +
+            //     "我是action——ID1的值==" +
+            //     this.options1[0] +
+            //     "我是action——ID的值1的key" +
+            //     this.options1[0].key
+            // );
           } else {
             alert("获取行为失败");
           }
         });
     },
+    Save1() {
+      this.dialogVisible = false;
+      for (let i = 0; i < this.options1.length; i++) {
+        if (this.options1[i].key == "Single") {
+          this.value11.push(this.options1[i].value);
+        } else if (this.options1[i].key == "Checkbox") {
+          this.value12.push(this.options1[i].value);
+        } else if (this.options1[i].key == "Text") {
+          this.value13.push(this.options1[i].value);
+        } else if (this.options1[i].key == "DateTime") {
+          this.value14.push(this.options1[i].value);
+        } else if (this.options1[i].key == "MutiText") {
+          this.value15.push(this.options1[i].value);
+        }
+      }
+    },
     actionChange() {
+      this.value21 = [];
+      this.value22 = [];
+      this.value23 = [];
+      this.value24 = [];
+      this.value25 = [];
       this.actionUrl = this.actionOptions[this.actionValue].ActionIcon;
       this.dialogVisible1 = true;
       let params1 = {
@@ -322,126 +330,146 @@ export default {
             this.options2 = eval(
               "(" + jsonObj + ")"
             ).data.behavior_defination_list;
-            for (let i = 0; i < this.options2.length; i++) {
-              if (this.options2[i].key == "Single") {
-                this.value21.push(this.options2[i].value);
-              } else if (this.options2[i].key == "Checkbox") {
-                this.value22.push(this.options2[i].value);
-              } else if (this.options1[i].key == "Text") {
-                this.value23.push(this.options2[i].value);
-              } else if (this.options1[i].key == "DateTime") {
-                this.value24.push(this.options2[i].value);
-              } else if (this.options1[i].key == "MutiText") {
-                this.value25.push(this.options2[i].value);
-              }
-            }
           } else {
             alert("获取行为失败");
           }
         });
     },
-    value1Change() {
-      // alert(this.radio);
-      if (this.value1 == "单选") {
-        this.key1 = "Single";
-        this.position1 = "0";
-      } else if (this.value1 == "多选") {
-        this.key1 = "Checkbox";
-        this.position1 = "1";
-      } else if (this.value1 == "文本") {
-        this.key1 = "Text";
-        this.position1 = "2";
-      } else if (this.value1 == "时间选择器") {
-        this.key1 = "DateTime";
-        this.position1 = "3";
-      } else if (this.value1 == "多行文本") {
-        this.key1 = "MutiText";
-        this.position1 = "4";
-      }
-    },
-    Save1() {
-      if (this.value1 == "单选") {
-        this.content1 = this.radio;
-      } else if (this.value1 == "多选") {
-        this.content1 = this.checkList;
-      } else if (this.value1 == "文本") {
-        this.content1 = this.input;
-      } else if (this.value1 == "时间选择器") {
-        this.content1 = this.datetime;
-      } else if (this.value1 == "多行文本") {
-        this.content1 = this.textarea;
-      }
-      this.dialogVisible = false;
-    },
-    value2Change() {
-      // alert(this.radio);
-      if (this.value2 == "单选") {
-        this.key2 = "Single";
-        this.position2 = "0";
-      } else if (this.value2 == "多选") {
-        this.key2 = "Checkbox";
-        this.position2 = "1";
-      } else if (this.value2 == "文本") {
-        this.key2 = "Text";
-        this.position2 = "2";
-      } else if (this.value2 == "时间选择器") {
-        this.key2 = "DateTime";
-        this.position2 = "3";
-      } else if (this.value2 == "多行文本") {
-        this.key2 = "MutiText";
-        this.position2 = "4";
-      }
-    },
     Save2() {
-      if (this.value2 == "单选") {
-        this.content2 = this.radio2;
-      } else if (this.value2 == "多选") {
-        this.content2 = this.checkList2;
-      } else if (this.value2 == "文本") {
-        this.content2 = this.input2;
-      } else if (this.value2 == "时间选择器") {
-        this.content2 = this.datetime2;
-      } else if (this.value2 == "多行文本") {
-        this.content2 = this.textarea2;
-      }
       this.dialogVisible1 = false;
+      for (let i = 0; i < this.options2.length; i++) {
+        if (this.options2[i].key == "Single") {
+          this.value21.push(this.options2[i].value);
+        } else if (this.options2[i].key == "Checkbox") {
+          this.value22.push(this.options2[i].value);
+        } else if (this.options2[i].key == "Text") {
+          this.value23.push(this.options2[i].value);
+        } else if (this.options2[i].key == "DateTime") {
+          this.value24.push(this.options2[i].value);
+        } else if (this.options2[i].key == "MutiText") {
+          this.value25.push(this.options2[i].value);
+        }
+      }
     },
     createFlow() {
+      let TriggerBehaviorList1 = [];
+
+      for (let i = 0; i < this.options1.length; i++) {
+        if (this.options1[i].key == "Single") {
+          TriggerBehaviorList1.push({
+            title: this.options1[i].title,
+            key: this.options1[i].key,
+            value: this.value11[i],
+            position: this.options1[i].position
+          });
+        } else if (this.options1[i].key == "Checkbox") {
+          for (let l = 0; l < this.value12[i].length; l++) {
+            this.checkbox1 = this.checkbox1 + this.value12[i][l] + ",";
+          }
+          if (this.checkbox1.length > 0) {
+            this.checkbox1 = this.checkbox1.substr(
+              0,
+              this.checkbox1.length - 1
+            );
+          }
+          TriggerBehaviorList1.push({
+            title: this.options1[i].title,
+            key: this.options1[i].key,
+            value: this.checkbox1,
+            position: this.options1[i].position
+          });
+        } else if (this.options1[i].key == "Text") {
+          TriggerBehaviorList1.push({
+            title: this.options1[i].title,
+            key: this.options1[i].key,
+            value: this.value13[i],
+            position: this.options1[i].position
+          });
+        } else if (this.options1[i].key == "DateTime") {
+          TriggerBehaviorList1.push({
+            title: this.options1[i].title,
+            key: this.options1[i].key,
+            value: this.value14[i],
+            position: this.options1[i].position
+          });
+        } else if (this.options1[i].key == "MutiText") {
+          TriggerBehaviorList1.push({
+            title: this.options1[i].title,
+            key: this.options1[i].key,
+            value: this.value15[i],
+            position: this.options1[i].position
+          });
+        }
+      }
+
+      let ActionBehaviorList2 = [];
+      for (let i = 0; i < this.options2.length; i++) {
+        // alert('我还是一个测试，现在都在测试阶段==='+this.options1[i].title+this.options1[i].key+this.options1[i].position);
+        if (this.options2[i].key == "Single") {
+          ActionBehaviorList2.push({
+            title: this.options2[i].title,
+            key: this.options2[i].key,
+            value: this.value21[i],
+            position: this.options2[i].position
+          });
+        } else if (this.options2[i].key == "Checkbox") {
+          for (let l = 0; l < this.value22[i].length; l++) {
+            this.checkbox2 = this.checkbox2 + this.value22[i][l] + ",";
+          }
+          if (this.checkbox2.length > 0) {
+            this.checkbox2 = this.checkbox2.substr(
+              0,
+              this.checkbox2.length - 1
+            );
+          }
+          ActionBehaviorList2.push({
+            title: this.options2[i].title,
+            key: this.options2[i].key,
+            value: this.checkbox2,
+            position: this.options2[i].position
+          });
+        } else if (this.options2[i].key == "Text") {
+          ActionBehaviorList2.push({
+            title: this.options2[i].title,
+            key: this.options2[i].key,
+            value: this.value23[i],
+            position: this.options2[i].position
+          });
+        } else if (this.options2[i].key == "DateTime") {
+          ActionBehaviorList2.push({
+            title: this.options2[i].title,
+            key: this.options2[i].key,
+            value: this.value24[i],
+            position: this.options2[i].position
+          });
+        } else if (this.options2[i].key == "MutiText") {
+          ActionBehaviorList2.push({
+            title: this.options2[i].title,
+            key: this.options2[i].key,
+            value: this.value25[i],
+            position: this.options2[i].position
+          });
+        }
+      }
       let params1 = {
         user_id: window.sessionStorage.getItem("user_id"),
         flow_defination_name: this.flow_defination_name,
         action_list: [
           {
-            action_id: this.triggerOptions[this.triggerValue].ActionId,
-            action_name: this.triggerOptions[this.triggerValue].ActionName,
+            action_id: this.triggerOptions[this.triggerValue].action_id,
+            action_name: this.triggerOptions[this.triggerValue].action_name,
             action_position: "1",
             action_type: "1",
-            action_icon: this.triggerOptions[this.triggerValue].ActionIcon,
-            behavior_instance_list: [
-              {
-                title: this.value1,
-                key: this.key1,
-                value: this.content1,
-                position: this.position1,
-                options: []
-              }
-            ]
+            action_icon: this.triggerOptions[this.triggerValue].action_icon,
+            behavior_instance_list: TriggerBehaviorList1
           },
           {
-            action_id: this.actionOptions[this.actionValue].ActionId,
-            action_name: this.actionOptions[this.actionValue].ActionName,
+            action_id: this.actionOptions[this.actionValue].action_id,
+            action_name: this.actionOptions[this.actionValue].action_name,
             action_position: "2",
             action_type: "2",
-            action_icon: this.actionOptions[this.actionValue].ActionIcon,
-            behavior_instance_list: [
-              {
-                title: this.value2,
-                key: this.key2,
-                value: this.content2,
-                position: this.position2,
-                options: []
-              }
-            ]
+            action_icon: this.actionOptions[this.actionValue].action_icon,
+            behavior_instance_list: ActionBehaviorList2
           }
         ]
       };
@@ -450,7 +478,6 @@ export default {
       this.$http
         .post("http://49.235.180.218:19999/createFlowDefination", params)
         .then(res => {
-          console.log("创建库的返回值", res);
           let jsonObj = JSON.stringify(res);
           console.log(jsonObj);
           this.status = eval("(" + jsonObj + ")").data.base.body;
